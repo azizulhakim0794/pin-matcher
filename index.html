@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="notify-section" id="notifyWrite"><p> 🖊️ Generate and Write the Pin then try again</p></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="randomInput" class="form-control" type="text" disabled>
+                    <button onclick="totalWorkForRandomBtn()" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input id = "submitInput"class="form-control" type="text">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div class="button" onclick="submitInput.value +='7'">7</div>
+                              <div class="button"onclick="submitInput.value +='8'">8</div>
+                              <div class="button"onclick="submitInput.value +='9'">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button"onclick="submitInput.value +='4'">4</div>
+                              <div class="button"onclick="submitInput.value +='5'">5</div>
+                              <div class="button"onclick="submitInput.value +='6'">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button"onclick="submitInput.value +='1'">1</div>
+                              <div class="button"onclick="submitInput.value +='2'">2</div>
+                              <div class="button"onclick="submitInput.value +='3'">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" value = "&larr" onclick="submitInput.value = submitInput.value.slice(0, -1)"><</div>
+                                <div class="button"onclick="submitInput.value +='0'">0</div>
+                                <div class="button" value ="C" onclick="submitInput.value =''">C</div>
+                            </div>
+                            <div>
+                                <button onclick="totalWorkForSubmitBtn()" type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+             <div id="notifyWrong" style="margin-bottom: 20px;"> <p>❌ Pin Didn't Match, Please try again</p></div>
+            <div id="notifyRight" style="margin-bottom: 20px;"><p>✅ Pin Matched... Secret door is opening for you</p></div>
+        </div>
+    </div>
+    <script>
+//              work for Generate Random number!!
+          function totalWorkForRandomBtn() {
+           let randomNumber = Math.random() * 9999
+            let output = Math.round(randomNumber);
+           document.getElementById('randomInput').value = output;
+           let outputString = output.toString();
+           if (outputString.length == 3){
+            let dot = ""
+           let number = outputString;
+           let fullValue = dot.concat(0, number);
+           document.getElementById('randomInput').value = fullValue;
+           }
+           if (outputString.length == 2){
+            let dot = ""
+           let number = outputString;
+           let fullValue = dot.concat(0,0, number);
+           document.getElementById('randomInput').value = fullValue;
+           }
+           if (outputString.length == 1){
+            let dot = ""
+           let number = outputString;
+           let fullValue = dot.concat(0,0,0, number);
+           document.getElementById('randomInput').value = fullValue;
+           }
+           console.log(outputString.length)
+             }
+//          work for mach Number in Input
+
+        function totalWorkForSubmitBtn() {
+           let output = document.getElementById('randomInput').value
+           let submitInput = document.getElementById('submitInput').value;
+           if( output.length == 0){
+            displayShow('notifyWrite', 'notifyRight', 'notifyWrong');  
+          }  
+         else if(output == submitInput){     
+            displayShow('notifyRight', 'notifyWrong', 'notifyWrite');  
+          }
+          else if(output > submitInput){
+            displayShow('notifyWrong', 'notifyRight', 'notifyWrite');   
+          }
+          else if( output < submitInput){
+            displayShow('notifyWrong', 'notifyRight', 'notifyWrite');  
+          }
+          }
+          function displayShow(first, second, third){
+            document.getElementById(first).style.display = 'block';  
+          document.getElementById(second).style.display = "none"; 
+          document.getElementById(third).style.display = "none"; 
+          }
+          
+    </script>
+</body>
+</html>
